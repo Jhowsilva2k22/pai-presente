@@ -2,7 +2,15 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/ebook",
+      "destination": "https://pahphvyepmwylstbguzf.supabase.co/storage/v1/object/public/ebooks/guia-pai-presente.pdf",
+      "statusCode": 302
+    }
+  ],
   "rewrites": [
+    { "source": "/quiz", "destination": "/quiz.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
