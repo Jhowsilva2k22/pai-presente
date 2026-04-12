@@ -1,1 +1,611 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Diagnóstico | Pai Presente</title><meta name="description" content="Descubra seu perfil como pai e receba o guia certo pra você."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><!-- GOOGLE FONTS --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"><!-- GA4 --><script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-XXXXXXXXXX');</script><!-- META PIXEL --><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '1903244050330201');fbq('track', 'PageView');</script><style>:root {--ivory: #F5F0EB;--warm-black: #0D0B09;--warm-dark: #1A1613;--surface: #151210;--gold: #B8956A;--gold-light: #D4B896;--gold-pale: #E8D5B8;--text-muted: #8A7E74;--text-subtle: #5A5148;}* {margin: 0;padding: 0;box-sizing: border-box;}html, body {width: 100%;height: 100%;background: var(--warm-black);color: var(--ivory);font-family: 'Inter', sans-serif;font-size: 16px;line-height: 1.5;}body {display: flex;flex-direction: column;}.container {flex: 1;display: flex;flex-direction: column;justify-content: center;align-items: center;padding: 20px;max-width: 800px;margin: 0 auto;width: 100%;}.header {text-align: center;margin-bottom: 40px;}.header h1 {font-family: 'Playfair Display', serif;font-size: 2.5rem;font-weight: 500;color: var(--gold);margin-bottom: 10px;}.header p {font-size: 1.1rem;color: var(--text-muted);max-width: 500px;}.questions-container {width: 100%;max-width: 600px;}.question {display: none;margin-bottom: 30px;animation: fadeIn 0.3s ease-in;}.question.active {display: block;}@keyframes fadeIn {from {opacity: 0;transform: translateY(10px);}to {opacity: 1;transform: translateY(0);}}.question-number {color: var(--text-muted);font-size: 0.9rem;margin-bottom: 10px;}.question-text {font-size: 1.3rem;font-weight: 500;margin-bottom: 20px;color: var(--ivory);}.options {display: flex;flex-direction: column;gap: 12px;}.option {padding: 15px 20px;border: 2px solid var(--gold-pale);border-radius: 8px;cursor: pointer;transition: all 0.2s;background: transparent;color: var(--ivory);text-align: left;font-size: 1rem;font-family: 'Inter', sans-serif;}.option:hover {background: var(--gold-pale);color: var(--warm-black);border-color: var(--gold);}.option.selected {background: var(--gold);color: var(--warm-black);border-color: var(--gold);}.progress-bar {width: 100%;height: 4px;background: var(--surface);border-radius: 2px;margin-bottom: 30px;overflow: hidden;}.progress-fill {height: 100%;background: var(--gold);transition: width 0.3s;}.button-group {display: flex;gap: 10px;margin-top: 30px;justify-content: center;}.btn {padding: 12px 30px;border: none;border-radius: 6px;cursor: pointer;font-size: 1rem;font-weight: 500;transition: all 0.2s;font-family: 'Inter', sans-serif;}.btn-secondary {background: transparent;color: var(--gold);border: 2px solid var(--gold);}.btn-secondary:hover {background: var(--gold);color: var(--warm-black);}.btn-primary {background: var(--gold);color: var(--warm-black);}.btn-primary:hover {background: var(--gold-light);}.btn-primary:disabled {background: var(--text-subtle);cursor: not-allowed;}.result-screen {display: none;text-align: center;padding: 40px 20px;width: 100%;}.result-screen.active {display: block;}.result-screen h2 {font-family: 'Playfair Display', serif;font-size: 2rem;color: var(--gold);margin-bottom: 20px;}.result-screen p {color: var(--text-muted);margin-bottom: 30px;max-width: 500px;margin-left: auto;margin-right: auto;}.lead-form {background: var(--surface);padding: 30px;border-radius: 8px;margin-top: 30px;max-width: 400px;margin-left: auto;margin-right: auto;}.form-group {margin-bottom: 15px;text-align: left;}.form-group label {display: block;margin-bottom: 5px;color: var(--gold);font-size: 0.9rem;font-weight: 500;}.form-group input {width: 100%;padding: 10px 15px;border: 1px solid var(--gold-pale);border-radius: 4px;background: var(--warm-black);color: var(--ivory);font-family: 'Inter', sans-serif;}.form-group input::placeholder {color: var(--text-subtle);}.form-group input:focus {outline: none;border-color: var(--gold);box-shadow: 0 0 0 2px rgba(184, 149, 106, 0.1);}@media (max-width: 600px) {.header h1 {font-size: 1.8rem;}.question-text {font-size: 1.1rem;}.option {padding: 12px 15px;font-size: 0.95rem;}.button-group {flex-direction: column;}.btn {width: 100%;}}</style></head><body><div class="container"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div class="header"><h1>Diagnóstico</h1><p>Descubra seu perfil como pai e receba o guia certo pra você</p></div><div class="questions-container" id="questionsContainer"></div><div class="result-screen" id="resultScreen"><h2 id="resultTitle"></h2><p id="resultDescription"></p><div class="lead-form"><form id="leadForm"><div class="form-group"><label for="name">Nome</label><input type="text" id="name" name="name" placeholder="Seu nome" required></div><div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="seu@email.com" required></div><button type="submit" class="btn btn-primary" style="width: 100%;">Receber Guia</button></form></div></div><div class="button-group" id="buttonGroup"></div></div><script>const questions = [{question: "Como você se descreveria como pai?",options: [{text: "Tradicional e estruturado", value: "tradicional"}, {text: "Moderno e flexível", value: "moderno"}, {text: "Equilibrado entre os dois", value: "equilibrado"}]}, {question: "Qual é sua maior preocupação na criação dos filhos?",options: [{text: "Educação e disciplina", value: "educacao"}, {text: "Emocional e bem-estar", value: "emocional"}, {text: "Desenvolvimento integral", value: "desenvolvimento"}]}, {question: "Com qual frequência você busca informações sobre paternidade?",options: [{text: "Diariamente", value: "diario"}, {text: "Semanalmente", value: "semanal"}, {text: "Conforme necessário", value: "conforme_necessario"}]}, {question: "Qual é o seu maior desafio atual na paternidade?",options: [{text: "Falta de tempo", value: "tempo"}, {text: "Insegurança nas decisões", value: "inseguranca"}, {text: "Comunicação com os filhos", value: "comunicacao"}]}];const profiles = {tradicional_educacao_diario_tempo: {title: "Pai Provedor Estruturado",description: "Você valoriza a estrutura e a educação formal. O guia focará em criar rotinas saudáveis e estabelecer limites claros."},tradicional_educacao_diario_inseguranca: {title: "Pai Buscador de Validação",description: "Você quer fazer o certo mas duvida de suas decisões. O guia incluirá dicas práticas e reforço positivo."},moderno_emocional_semanal_comunicacao: {title: "Pai Emocionalmente Conectado",description: "Você prioriza a conexão emocional e a comunicação aberta. O guia focará em técnicas de diálogo e inteligência emocional."},equilibrado_desenvolvimento_conforme_necessario_tempo: {title: "Pai Equilibrado e Pragmático",description: "Você busca um equilíbrio entre estrutura e flexibilidade. O guia oferecerá estratégias adaptáveis para diferentes situações."}};let currentQuestion = 0;let answers = {};let selectedAnswers = {};function getProfile() {const answerKeys = Object.values(answers);const profileKey = answerKeys.join("_");return profiles[profileKey] || {title: "Pai Presente",description: "Você já está no caminho certo por buscar desenvolver-se como pai. O guia é feito especialmente para você."};}function updateProgress() {const progress = ((currentQuestion) / questions.length) * 100;document.getElementById('progressFill').style.width = progress + '%';}function renderQuestion(index) {const container = document.getElementById('questionsContainer');container.innerHTML = '';const question = questions[index];const questionDiv = document.createElement('div');questionDiv.className = 'question active';questionDiv.innerHTML = `<div class="question-number">Pergunta ${index + 1} de ${questions.length}</div><div class="question-text">${question.question}</div><div class="options" id="optionsContainer"></div>`;container.appendChild(questionDiv);const optionsContainer = document.getElementById('optionsContainer');question.options.forEach(option => {const button = document.createElement('button');button.className = 'option';if (selectedAnswers[index] === option.value) {button.classList.add('selected');}button.textContent = option.text;button.onclick = () => selectOption(index, option.value);optionsContainer.appendChild(button);});updateProgress();renderButtons();}function selectOption(questionIndex, optionValue) {answers[questionIndex] = optionValue;selectedAnswers[questionIndex] = optionValue;renderQuestion(questionIndex);}function renderButtons() {const buttonGroup = document.getElementById('buttonGroup');buttonGroup.innerHTML = '';if (currentQuestion > 0) {const prevBtn = document.createElement('button');prevBtn.className = 'btn btn-secondary';prevBtn.textContent = 'Voltar';prevBtn.onclick = goToPrevious;buttonGroup.appendChild(prevBtn);}const nextBtn = document.createElement('button');nextBtn.className = 'btn btn-primary';nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Ver Resultado' : 'Próxima';nextBtn.disabled = answers[currentQuestion] === undefined;nextBtn.onclick = goToNext;buttonGroup.appendChild(nextBtn);}function goToNext() {if (currentQuestion < questions.length - 1) {currentQuestion++;renderQuestion(currentQuestion);} else {showResult();}}function goToPrevious() {if (currentQuestion > 0) {currentQuestion--;renderQuestion(currentQuestion);}}function showResult() {document.getElementById('questionsContainer').style.display = 'none';document.getElementById('buttonGroup').style.display = 'none';const profile = getProfile();document.getElementById('resultTitle').textContent = profile.title;document.getElementById('resultDescription').textContent = profile.description;document.getElementById('resultScreen').classList.add('active');document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);}function handleFormSubmit(e) {e.preventDefault();const name = document.getElementById('name').value;const email = document.getElementById('email').value;if (typeof gtag !== 'undefined') {gtag('event', 'lead', {'event_category': 'engagement','event_label': 'quiz_lead','user_email': email,'user_name': name});}if (typeof fbq !== 'undefined') {fbq('track', 'Lead', { content_name: 'guia_pai_presente' });}if (typeof window.MailerLite !== 'undefined' && window.MailerLite) {window.MailerLite('subscribe', {email: email,fields: {name: name,profile_type: getProfile().title}});} else {fetch('/api/subscribe', {method: 'POST',headers: {'Content-Type': 'application/json'},body: JSON.stringify({email: email,name: name,profile_type: getProfile().title})}).catch(err => console.error('Subscription error:', err));}setTimeout(function() {window.location.href = 'index.html?concluido=1';}, 2000);}renderQuestion(0);</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Diagnóstico | Pai Presente</title>
+    <meta name="description" content="Descubra seu perfil como pai e receba o guia certo pra você.">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+    <!-- GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- META PIXEL -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1903244050330201');
+        fbq('track', 'PageView');
+    </script>
+
+    <style>
+        :root {
+            --ivory: #F5F0EB;
+            --warm-black: #0D0B09;
+            --warm-dark: #1A1613;
+            --surface: #151210;
+            --gold: #B8956A;
+            --gold-light: #D4B896;
+            --gold-pale: #E8D5B8;
+            --text-muted: #8A7E74;
+            --text-subtle: #5A5148;
+            --border-color: #3A3228;
+            --hover-bg: #1F1A15;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-black);
+            color: var(--ivory);
+            overflow-x: hidden;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--surface);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .questions-container {
+            display: none;
+        }
+
+        .questions-container.active {
+            display: block;
+        }
+
+        .question-card {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-number {
+            display: inline-block;
+            font-size: 0.875rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            color: var(--ivory);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px;
+            background-color: var(--warm-dark);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .option:hover {
+            background-color: var(--hover-bg);
+            border-color: var(--gold);
+            color: var(--ivory);
+        }
+
+        .option.selected {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: var(--warm-black);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: var(--border-color);
+            border-radius: 2px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--warm-dark);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--ivory);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-subtle);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--warm-black);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(184, 149, 106, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--warm-dark);
+            color: var(--text-muted);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--hover-bg);
+            border-color: var(--gold);
+            color: var(--ivory);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .success-message h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+                border-radius: 8px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .question-card h2 {
+                font-size: 1.25rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Diagnóstico</h1>
+            <p>Descubra seu perfil como pai e receba o guia certo pra você.</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="questions-container active">
+            <div class="question-card active">
+                <div class="question-number">Pergunta 1 de 4</div>
+                <h2>Como você se vê como pai?</h2>
+                <div class="options"></div>
+            </div>
+            <div class="question-card">
+                <div class="question-number">Pergunta 2 de 4</div>
+                <h2>Qual é sua maior preocupação na paternidade?</h2>
+                <div class="options"></div>
+            </div>
+            <div class="question-card">
+                <div class="question-number">Pergunta 3 de 4</div>
+                <h2>Com que frequência você dedica tempo planejado com seus filhos?</h2>
+                <div class="options"></div>
+            </div>
+            <div class="question-card">
+                <div class="question-number">Pergunta 4 de 4</div>
+                <h2>Qual é seu maior desafio atual como pai?</h2>
+                <div class="options"></div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="leadForm">
+                <div class="form-group">
+                    <label for="fullName">Nome Completo</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" id="backBtn">Voltar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="success-message">
+            <h2>Obrigado!</h2>
+            <p>Seus dados foram recebidos. Em breve você receberá nosso guia personizado.</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Como você se vê como pai?",
+                options: ["Tradicional e estruturado", "Moderno e emocional", "Equilibrado"]
+            },
+            {
+                question: "Qual é sua maior preocupação na paternidade?",
+                options: ["Educação e disciplina", "Comunicação emocional", "Desenvolvimento equilibrado"]
+            },
+            {
+                question: "Com que frequência você dedica tempo planejado com seus filhos?",
+                options: ["Diariamente", "Semanalmente", "Conforme necessário"]
+            },
+            {
+                question: "Qual é seu maior desafio atual como pai?",
+                options: ["Falta de tempo", "Insegurança", "Comunicação"]
+            }
+        ];
+
+        const profiles = {
+            "tradicional_educacao_diario_tempo": {
+                name: "Pai Estruturado",
+                description: "Você valoriza educação e estrutura"
+            },
+            "tradicional_educacao_diario_inseguranca": {
+                name: "Pai Disciplinador",
+                description: "Você acredita em limites claros e educação formal"
+            },
+            "moderno_emocional_semanal_comunicacao": {
+                name: "Pai Conectado",
+                description: "Você prioriza a conexão emocional com seus filhos"
+            },
+            "equilibrado_desenvolvimento_conforme_necessario_tempo": {
+                name: "Pai Equilibrado",
+                description: "Você busca o balanço entre estrutura e flexibilidade"
+            }
+        };
+
+        let currentQuestion = 0;
+        let answers = [null, null, null, null];
+
+        function initQuiz() {
+            renderQuestions();
+            setupEventListeners();
+        }
+
+        function renderQuestions() {
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach((card, index) => {
+                const optionsContainer = card.querySelector('.options');
+                optionsContainer.innerHTML = '';
+                
+                questions[index].options.forEach((option, optionIndex) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option;
+                    optionDiv.addEventListener('click', () => selectOption(index, optionIndex, optionDiv));
+                    optionsContainer.appendChild(optionDiv);
+                });
+            });
+        }
+
+        function selectOption(questionIndex, optionIndex, element) {
+            const optionsInQuestion = document.querySelectorAll(`.question-card:nth-child(${questionIndex + 1}) .option`);
+            optionsInQuestion.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            answers[questionIndex] = optionIndex;
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.question-card').forEach((card, index) => {
+                const options = card.querySelectorAll('.option');
+                options.forEach((option, optionIndex) => {
+                    option.addEventListener('click', () => {
+                        selectOption(index, optionIndex, option);
+                    });
+                });
+            });
+
+            document.getElementById('backBtn').addEventListener('click', goBack);
+            document.getElementById('leadForm').addEventListener('submit', handleSubmit);
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                alert('Por favor, selecione uma opção');
+                return;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion >= questions.length) {
+                showForm();
+            } else {
+                updateProgress();
+                updateQuestionDisplay();
+            }
+        }
+
+        function goBack() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateProgress();
+                updateQuestionDisplay();
+            } else {
+                document.querySelector('.questions-container').classList.add('active');
+                document.querySelector('.form-container').classList.remove('active');
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.querySelector('.progress-fill').style.width = progress + '%';
+        }
+
+        function updateQuestionDisplay() {
+            const cards = document.querySelectorAll('.question-card');
+            cards.forEach((card, index) => {
+                if (index === currentQuestion) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        function showForm() {
+            document.querySelector('.questions-container').classList.remove('active');
+            document.querySelector('.form-container').classList.add('active');
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Track event with Google Analytics
+            gtag('event', 'lead_submit', {
+                'email': email,
+                'phone': phone
+            });
+
+            // Track with Meta Pixel
+            fbq('track', 'Lead', {
+                content_name: 'Quiz Lead',
+                content_type: 'lead_form',
+                value: 1.00,
+                currency: 'BRL'
+            });
+
+            // Send to MailerLite
+            try {
+                const mailerliteResponse = await fetch('https://api.mailerlite.com/v1/subscribers', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer YOUR_MAILERLITE_API_KEY',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        fields: {
+                            name: fullName,
+                            phone: phone,
+                            quiz_profile: getProfileKey()
+                        },
+                        groups: ['YOUR_GROUP_ID']
+                    })
+                });
+
+                if (!mailerliteResponse.ok) {
+                    console.warn('MailerLite API error, using fallback');
+                }
+            } catch (error) {
+                console.warn('MailerLite request failed, using fallback', error);
+            }
+
+            // Show success message
+            document.querySelector('.form-container').classList.remove('active');
+            document.querySelector('.success-message').classList.add('active');
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html?concluido=1';
+            }, 2000);
+        }
+
+        function getProfileKey() {
+            // Map answers to profile key
+            const answerString = answers.join('-');
+            // Simplified profile mapping
+            if (answers[0] === 0) return 'tradicional_educacao_diario_tempo';
+            if (answers[0] === 1) return 'moderno_emocional_semanal_comunicacao';
+            return 'equilibrado_desenvolvimento_conforme_necessario_tempo';
+        }
+
+        // Add Next button functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+
+            // Add next button to each question card
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach((card) => {
+                const buttonGroup = document.createElement('div');
+                buttonGroup.className = 'button-group';
+                buttonGroup.innerHTML = '<button type="button" class="btn btn-primary" style="flex: 1;">Próxima</button>';
+                buttonGroup.querySelector('button').addEventListener('click', nextQuestion);
+                card.appendChild(buttonGroup);
+            });
+
+            updateProgress();
+        });
+    </script>
+
+</body>
+</html>
