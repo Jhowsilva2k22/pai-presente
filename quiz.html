@@ -43,726 +43,870 @@
             --gold-pale: #E8D5B8;
             --text-muted: #8A7E74;
             --text-subtle: #5A5148;
-            --text-light: #A89A8D;
-            --error: #EF4444;
-            --success: #22C55E;
-            --border-light: #3C3530;
-            --bg-hover: #2A2420;
+            --line: rgba(184, 149, 106, 0.1);
+            --whats-green: #25D366;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             font-size: 16px;
-            height: 100%;
-            overflow-y: scroll;
+            touch-action: manipulation;
         }
-
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
             background: var(--warm-black);
-            color: var(--text-muted);
-            line-height: 1.6;
             min-height: 100vh;
+            min-height: 100dvh;
+            color: var(--ivory);
+            overflow-x: hidden;
             display: flex;
-            flex-direction: column;
-            font-size: 1rem;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
         }
-
-        header {
-            background: linear-gradient(135deg, rgba(29, 23, 19, 0.5) 0%, rgba(13, 11, 9, 1) 100%);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 1rem;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--gold);
-            text-decoration: none;
-        }
-
-        .main-container {
-            flex: 1;
-            padding: 2rem 1rem;
-            max-width: 800px;
-            margin: 0 auto;
+        .quiz-page {
+            max-width: 480px;
             width: 100%;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--ivory);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--gold-light);
-            margin: 2rem 0 1rem;
-        }
-
-        .intro-text {
-            color: var(--text-light);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
-        }
-
-        .quiz-container {
-            background: var(--surface);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .question-section {
-            margin-bottom: 2.5rem;
-            display: none;
-        }
-
-        .question-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .question-number {
-            color: var(--gold);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .question-text {
-            color: var(--ivory);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .options {
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
         }
-
-        .option {
-            position: relative;
-            cursor: pointer;
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 48px;
         }
-
-        .option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
+        .quiz-header .gold-accent {
+            width: 32px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 24px;
         }
-
-        .option-label {
-            display: block;
-            padding: 1rem;
-            border: 2px solid var(--border-light);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: transparent;
-            color: var(--text-light);
+        .quiz-header h1 {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: clamp(22px, 5vw, 28px);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+            color: var(--ivory);
         }
-
-        .option input[type="radio"]:checked + .option-label {
-            border-color: var(--gold);
-            background: rgba(184, 149, 106, 0.1);
+        .quiz-header h1 em {
+            font-style: italic;
             color: var(--gold-light);
         }
-
-        .option-label:hover {
-            border-color: var(--gold-light);
-            background: rgba(184, 149, 106, 0.05);
+        .quiz-header p {
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.65;
+            color: var(--text-muted);
+            max-width: 320px;
+            margin: 0 auto;
         }
-
         .progress-bar {
-            height: 4px;
-            background: var(--border-light);
-            border-radius: 2px;
-            margin-bottom: 2rem;
-            overflow: hidden;
+            width: 100%;
+            max-width: 340px;
+            height: 2px;
+            background: rgba(184, 149, 106, 0.1);
+            margin-bottom: 40px;
+            position: relative;
         }
-
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-            border-radius: 2px;
-            transition: width 0.3s ease;
+            background: var(--gold);
+            transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            width: 0%;
         }
-
-        .button-group {
+        .progress-text {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .question-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .question-slide {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: slideIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+        .question-slide.active {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            justify-content: space-between;
         }
-
-        button {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question-text {
+            font-size: clamp(15px, 3.8vw, 17px);
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--ivory);
+            text-align: center;
+            margin-bottom: 32px;
+            max-width: 360px;
+        }
+        .options {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid var(--line);
+            border-radius: 0;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: 0.2px;
+            text-align: left;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        .option:hover {
+            border-color: rgba(184, 149, 106, 0.3);
+            color: var(--gold-light);
+            background: rgba(184, 149, 106, 0.04);
+        }
+        .option:active,
+        .option.selected {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            background: rgba(184, 149, 106, 0.08);
+        }
+        .option.selected::after {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+        .result-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            animation: slideIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+        .result-screen.active {
+            display: flex;
+        }
+        .result-badge {
+            font-size: 9px;
             font-weight: 500;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding: 8px 20px;
+            border: 1px solid rgba(184, 149, 106, 0.2);
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            color: var(--warm-black);
-            flex: 1;
+        .result-title {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: clamp(22px, 5.5vw, 30px);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+            color: var(--ivory);
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(184, 149, 106, 0.3);
+        .result-title em {
+            font-style: italic;
+            color: var(--gold-light);
         }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
+        .result-subtitle {
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--text-subtle);
+            margin-bottom: 28px;
         }
-
-        .btn-secondary {
+        .result-divider {
+            width: 32px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin-bottom: 28px;
+        }
+        .result-description {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-muted);
+            max-width: 340px;
+            margin-bottom: 16px;
+        }
+        .result-traits {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 36px;
+            max-width: 360px;
+        }
+        .trait {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            padding: 6px 14px;
+            border: 1px solid var(--line);
+        }
+        .capture-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            animation: slideIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+        .capture-screen.active {
+            display: flex;
+        }
+        .capture-title {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: clamp(20px, 4.5vw, 26px);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+            color: var(--ivory);
+        }
+        .capture-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+        .capture-subtitle {
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.65;
+            color: var(--text-muted);
+            max-width: 320px;
+            margin-bottom: 32px;
+        }
+        .capture-form {
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid var(--line);
+            border-radius: 0;
+            background: transparent;
+            color: var(--ivory);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            outline: none;
+            transition: border-color 0.4s ease;
+            -webkit-appearance: none;
+        }
+        .input-field::placeholder {
+            color: var(--text-subtle);
+            font-weight: 300;
+        }
+        .input-field:focus {
+            border-color: var(--gold);
+        }
+        .whats-input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--line);
+            transition: border-color 0.4s ease;
+        }
+        .whats-input-wrapper:focus-within {
+            border-color: var(--gold);
+        }
+        .whats-prefix {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 0 16px 16px;
+            color: var(--text-subtle);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+            user-select: none;
+        }
+        .whats-prefix svg {
+            width: 16px;
+            height: 16px;
+            color: var(--whats-green);
+            flex-shrink: 0;
+        }
+        .whats-input-wrapper .input-field {
+            border: none;
+            padding-left: 8px;
+        }
+        .whats-input-wrapper .input-field:focus {
+            border: none;
+        }
+        .capture-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 18px 36px;
+            border: 1px solid var(--gold);
+            border-radius: 0;
             background: transparent;
             color: var(--gold-light);
-            border: 2px solid var(--gold-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            margin-top: 8px;
         }
-
-        .btn-secondary:hover {
-            background: rgba(212, 184, 150, 0.1);
+        .capture-submit::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 0;
         }
-
-        .btn-secondary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .capture-submit:hover::before,
+        .capture-submit:active::before {
+            transform: scaleX(1);
+            transform-origin: left;
         }
-
-        .results-container {
+        .capture-submit:hover,
+        .capture-submit:active {
+            color: var(--warm-black);
+            border-color: var(--gold);
+        }
+        .capture-submit span {
+            position: relative;
+            z-index: 1;
+        }
+        .capture-privacy {
+            margin-top: 12px;
+            font-size: 10px;
+            font-weight: 300;
+            color: var(--text-subtle);
+            letter-spacing: 0.5px;
+        }
+        .input-error {
+            border-color: #8B3A3A !important;
+        }
+        .error-msg {
+            font-size: 11px;
+            color: #C4705A;
+            margin-top: -4px;
+            text-align: left;
             display: none;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in;
         }
-
-        .results-container.show {
+        .error-msg.show {
             display: block;
         }
-
-        .result-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--gold-light);
-            margin: 2rem 0;
-        }
-
-        .result-description {
-            color: var(--text-light);
-            font-size: 1.05rem;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .ebook-download {
-            background: linear-gradient(135deg, rgba(184, 149, 106, 0.15) 0%, rgba(212, 184, 150, 0.05) 100%);
-            border: 2px solid var(--gold-pale);
-            border-radius: 8px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .ebook-title {
-            color: var(--gold-light);
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .ebook-description {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .btn-download {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: var(--gold);
-            color: var(--warm-black);
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-        }
-
-        .btn-download:hover {
-            background: var(--gold-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(184, 149, 106, 0.3);
-        }
-
-        .instagram-section {
-            background: linear-gradient(135deg, rgba(217, 88, 172, 0.1) 0%, rgba(184, 149, 106, 0.05) 100%);
-            border: 2px solid rgba(217, 88, 172, 0.3);
-            border-radius: 8px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .instagram-title {
-            color: var(--ivory);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .instagram-description {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .btn-instagram {
-            display: inline-flex;
+        .download-btn {
+            display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            background: #E1306C;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-instagram:hover {
-            background: #C13584;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
-        }
-
-        .instagram-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border-light);
-            padding: 2rem 1rem;
-            text-align: center;
-            color: var(--text-subtle);
-            margin-top: auto;
-        }
-
-        .footer-text {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 0.9rem;
-        }
-
-        .footer-link {
+            justify-content: center;
+            width: 100%;
+            max-width: 340px;
+            padding: 18px 36px;
+            border: 1px solid var(--gold);
+            border-radius: 0;
+            background: transparent;
             color: var(--gold-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        .footer-link:hover {
-            color: var(--gold);
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 0;
         }
-
-        @media (max-width: 640px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            h2 {
-                font-size: 1.25rem;
-            }
-
-            .quiz-container {
-                padding: 1.5rem;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            .btn-secondary {
-                order: -1;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-
-            .question-text {
-                font-size: 1rem;
-            }
+        .download-btn:hover::before,
+        .download-btn:active::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .download-btn:hover,
+        .download-btn:active {
+            color: var(--warm-black);
+            border-color: var(--gold);
+        }
+        .download-btn span {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .download-btn .arrow {
+            font-weight: 300;
+            font-size: 16px;
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .download-btn:hover .arrow { transform: translateX(5px); }
+        .result-note {
+            margin-top: 16px;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+        }
+        .instagram-cta {
+            margin-top: 28px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+        }
+        .instagram-label {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: 12px;
+        }
+        .instagram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px 24px;
+            border: 1px solid rgba(225, 48, 108, 0.25);
+            background: transparent;
+            color: rgba(225, 48, 108, 0.7);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .instagram-btn:hover,
+        .instagram-btn:active {
+            border-color: rgba(225, 48, 108, 0.6);
+            background: rgba(225, 48, 108, 0.06);
+            color: #E1306C;
+        }
+        .instagram-btn span {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .instagram-btn svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+        @keyframes fadeReveal {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            animation: fadeReveal 1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+        .reveal-d1 { animation-delay: 0.2s; }
+        .reveal-d2 { animation-delay: 0.4s; }
+        .reveal-d3 { animation-delay: 0.6s; }
+        .reveal-d4 { animation-delay: 0.8s; }
+        @media (min-width: 1024px) {
+            .quiz-page { max-width: 540px; }
+            .question-text { font-size: 18px; }
+            .option { padding: 18px 24px; font-size: 14px; }
+        }
+        @media (max-width: 374px) {
+            .quiz-page { padding: 32px 16px; }
+            .option { padding: 14px 16px; font-size: 12px; }
+            .download-btn { padding: 16px 24px; font-size: 10px; }
+        }
+        @media (max-height: 500px) and (orientation: landscape) {
+            .quiz-page { justify-content: flex-start; padding-top: 20px; }
+            .quiz-header { margin-bottom: 24px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <a href="/" class="logo">Pai Presente</a>
-        </div>
-    </header>
-
-    <main class="main-container">
-        <h1>Qual é o seu Perfil de Pai?</h1>
-        <p class="intro-text">Responda 5 perguntas simples para descobrir seu estilo parental e receber um guia personalizado</p>
-
-        <div class="quiz-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-
-            <!-- Question 1 -->
-            <div class="question-section active" data-question="0">
-                <div class="question-number">Pergunta 1 de 5</div>
-                <div class="question-text">Como você toma decisões sobre a educação dos seus filhos?</div>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q1" value="estruturado">
-                        <span class="option-label">Com planejamento e estrutura clara</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="flexivel">
-                        <span class="option-label">De forma flexível e adaptável</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="instintivo">
-                        <span class="option-label">Seguindo meu instinto e experiência</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="question-section" data-question="1">
-                <div class="question-number">Pergunta 2 de 5</div>
-                <div class="question-text">Qual é sua maior preocupação com a paternidade?</div>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q2" value="desenvolvimento">
-                        <span class="option-label">Desenvolvimento emocional e social</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q2" value="limites">
-                        <span class="option-label">Estabelecer limites e disciplina</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q2" value="equilibrio">
-                        <span class="option-label">Equilibrar trabalho, vida pessoal e paternidade</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question-section" data-question="2">
-                <div class="question-number">Pergunta 3 de 5</div>
-                <div class="question-text">Como você se comporta quando seu filho está triste ou estressado?</div>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q3" value="resolver">
-                        <span class="option-label">Tento resolver o problema rapidamente</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q3" value="ouvir">
-                        <span class="option-label">Ouço com atenção e compreensão</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q3" value="distrair">
-                        <span class="option-label">Procuro distraí-lo com atividades</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Question 4 -->
-            <div class="question-section" data-question="3">
-                <div class="question-number">Pergunta 4 de 5</div>
-                <div class="question-text">Qual é seu principal objetivo como pai?</div>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q4" value="felicidade">
-                        <span class="option-label">Que meus filhos sejam felizes e seguros</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q4" value="sucesso">
-                        <span class="option-label">Prepará-los para o sucesso e independência</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q4" value="valores">
-                        <span class="option-label">Transmitir valores e tradições</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="question-section" data-question="4">
-                <div class="question-number">Pergunta 5 de 5</div>
-                <div class="question-text">Como você se mantém atualizado sobre paternidade?</div>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="q5" value="livros">
-                        <span class="option-label">Leio livros e artigos sobre desenvolvimento infantil</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q5" value="comunidade">
-                        <span class="option-label">Converso com outros pais e busco apoio</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q5" value="experiencia">
-                        <span class="option-label">Aprendo principalmente com minha própria experiência</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn-secondary" id="prevBtn" onclick="changeQuestion(-1)">← Voltar</button>
-                <button class="btn-primary" id="nextBtn" onclick="changeQuestion(1)">Próxima →</button>
+<div class="quiz-page">
+    <div class="quiz-header reveal reveal-d1">
+        <div class="gold-accent"></div>
+        <h1>Seu <em>diagn&oacute;stico</em></h1>
+        <p>Responda com sinceridade. Em menos de 1 minuto voc&ecirc; descobre seu perfil como pai.</p>
+    </div>
+    <div class="progress-bar reveal reveal-d2">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-text reveal reveal-d3" id="progress-text">Pergunta 1 de 4</p>
+    <div class="question-container reveal reveal-d4" id="questions">
+        <div class="question-slide active" data-question="1">
+            <p class="question-text">Quantos filhos voc&ecirc; tem &mdash; e qual a faixa de idade?</p>
+            <div class="options">
+                <button class="option" data-value="primeira-infancia" data-tag="perfil">Tenho filho(s) de 0 a 5 anos</button>
+                <button class="option" data-value="infancia" data-tag="perfil">Tenho filho(s) de 6 a 12 anos</button>
+                <button class="option" data-value="misto" data-tag="perfil">Tenho filhos em faixas diferentes</button>
+                <button class="option" data-value="pre-pai" data-tag="perfil">Ainda n&atilde;o sou pai, estou me preparando</button>
             </div>
         </div>
-
-        <!-- Results Section -->
-        <div class="results-container" id="resultsContainer">
-            <h2 class="result-title" id="profileTitle"></h2>
-            <p class="result-description" id="profileDescription"></p>
-
-            <div class="ebook-download">
-                <div class="ebook-title">📚 Seu Guia Personalizado</div>
-                <div class="ebook-description">Baixe o eBook com dicas e estratégias específicas para seu estilo parental</div>
-                <a href="#" class="btn-download" id="ebookBtn" onclick="handleEbookDownload(event)">Baixar Guia Completo</a>
+        <div class="question-slide" data-question="2">
+            <p class="question-text">Qual &eacute; sua maior dificuldade como pai hoje?</p>
+            <div class="options">
+                <button class="option" data-value="comunicacao" data-tag="dificuldade">N&atilde;o sei como conversar de um jeito que ele realmente me ou&ccedil;a</button>
+                <button class="option" data-value="presenca" data-tag="dificuldade">Trabalho muito e sinto que estou perdendo momentos</button>
+                <button class="option" data-value="disciplina" data-tag="dificuldade">Tenho dificuldade de colocar limites sem brigar</button>
+                <button class="option" data-value="educacao" data-tag="dificuldade">Quero ensinar valores e educa&ccedil;&atilde;o financeira, mas n&atilde;o sei por onde</button>
             </div>
-
-            <div class="instagram-section">
-                <div class="instagram-title">Quer mais conteúdo?</div>
-                <div class="instagram-description">Siga nossa página no Instagram para dicas diárias e comunidade de pais</div>
-                <a href="#" class="btn-instagram" id="instagramBtn" onclick="handleInstagramClick(event)">
-                    <svg class="instagram-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.266.069 1.646.069 4.85 0 3.204-.012 3.584-.069 4.85-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.322a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+        </div>
+        <div class="question-slide" data-question="3">
+            <p class="question-text">Quanto tempo por dia voc&ecirc; consegue estar de verdade presente com seu filho?</p>
+            <div class="options">
+                <button class="option" data-value="pouco" data-tag="tempo">Menos de 30 minutos</button>
+                <button class="option" data-value="medio" data-tag="tempo">Entre 30 min e 1 hora</button>
+                <button class="option" data-value="perdido" data-tag="tempo">Mais de 1 hora, mas sem saber o que fazer</button>
+                <button class="option" data-value="rejeitado" data-tag="tempo">Tenho tempo, mas meu filho n&atilde;o quer ficar comigo</button>
+            </div>
+        </div>
+        <div class="question-slide" data-question="4">
+            <p class="question-text">Qual dessas frases mais te representa hoje?</p>
+            <div class="options">
+                <button class="option" data-value="ciclo" data-tag="motivacao">"Quero ser diferente do pai que eu tive."</button>
+                <button class="option" data-value="medo" data-tag="motivacao">"Tenho medo de errar com meu filho."</button>
+                <button class="option" data-value="inicio" data-tag="motivacao">"Sei que preciso melhorar, mas n&atilde;o sei como."</button>
+                <button class="option" data-value="aprofundar" data-tag="motivacao">"Estou no caminho certo, s&oacute; quero ir mais fundo."</button>
+            </div>
+        </div>
+    </div>
+    <div class="capture-screen" id="capture-screen">
+        <div class="gold-accent" style="width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 24px;"></div>
+        <h2 class="capture-title">Seu diagn&oacute;stico est&aacute; <em>pronto</em></h2>
+        <p class="capture-subtitle">Preencha abaixo para receber o resultado, o guia pr&aacute;tico e conte&uacute;do exclusivo.</p>
+        <div class="capture-form" id="capture-form">
+            <input type="text" class="input-field" id="input-nome" placeholder="Seu primeiro nome" autocomplete="given-name">
+            <p class="error-msg" id="error-nome">Informe seu nome</p>
+            <input type="email" class="input-field" id="input-email" placeholder="Seu melhor e-mail" autocomplete="email" inputmode="email">
+            <p class="error-msg" id="error-email">Informe um e-mail v&aacute;lido</p>
+            <div class="whats-input-wrapper">
+                <div class="whats-prefix">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.008a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.86 9.86 0 012.15 12.07c.002-5.45 4.437-9.884 9.889-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z" fill="currentColor"/>
                     </svg>
-                    Seguir no Instagram
-                </a>
+                    +55
+                </div>
+                <input type="tel" class="input-field" id="input-whats" placeholder="11 99999-9999" autocomplete="tel" inputmode="numeric">
             </div>
-
-            <button class="btn-secondary" onclick="resetQuiz()" style="width: 100%; margin-top: 2rem;">Fazer o Teste Novamente</button>
+            <p class="error-msg" id="error-whats">Informe um n&uacute;mero v&aacute;lido</p>
+            <button class="capture-submit" id="btn-submit" onclick="submitCapture()">
+                <span>Ver meu diagn&oacute;stico</span>
+            </button>
+            <p class="capture-privacy">Seus dados est&atilde;o seguros. Sem spam.</p>
         </div>
-    </main>
-
-    <footer>
-        <div class="footer-text">
-            <p>Pai Presente &copy; 2024. Ajudando pais a serem o melhor para seus filhos.</p>
-            <p style="margin-top: 1rem; font-size: 0.85rem;">
-                <a href="#" class="footer-link">Privacidade</a> • 
-                <a href="#" class="footer-link">Termos</a> • 
-                <a href="#" class="footer-link">Contato</a>
-            </p>
+    </div>
+    <div class="result-screen" id="result-screen">
+        <div class="result-badge" id="result-badge">Seu perfil</div>
+        <h2 class="result-title" id="result-title"></h2>
+        <p class="result-subtitle" id="result-subtitle"></p>
+        <div class="result-divider"></div>
+        <p class="result-description" id="result-description"></p>
+        <div class="result-traits" id="result-traits"></div>
+        <a href="https://pahphvyepmwylstbguzf.supabase.co/storage/v1/object/public/ebooks/guia-pai-presente.pdf"
+           class="download-btn"
+           id="btn-download"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="trackDownload()">
+            <span>Baixe seu guia pr&aacute;tico gratuito <span class="arrow">&rarr;</span></span>
+        </a>
+        <p class="result-note">Preparado especialmente para o seu perfil</p>
+        <div class="instagram-cta">
+            <p class="instagram-label">Dicas todo dia no Instagram</p>
+            <a href="https://instagram.com/eusoujoanderson1"
+               class="instagram-btn"
+               target="_blank"
+               rel="noopener noreferrer"
+               onclick="trackInstagram()">
+                <span>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+                    </svg>
+                    Seguir @eusoujoanderson1
+                </span>
+            </a>
         </div>
-    </footer>
-
-    <script>
-        const profiles = {
-            estruturado_desenvolvimento_resolver: {
-                title: "O Pai Estratégico",
-                description: "Você é um pai que valoriza o planejamento e estrutura, mantendo foco no desenvolvimento emocional de seus filhos. Você toma decisões com base em análise cuidadosa e sempre busca resolver os problemas de forma eficiente. Seu estilo equilibra disciplina com compreensão, criando um ambiente seguro e previsível para o crescimento.",
-                ebook: "Guia-do-Pai-Estrategico.pdf"
-            },
-            estruturado_desenvolvimento_ouvir: {
-                title: "O Pai Empático Organizado",
-                description: "Você combina estrutura e empatia, sendo um pai que planeja mas também escuta atentamente as necessidades emocionais de seus filhos. Seu equilíbrio entre organização e compreensão cria um ambiente onde as crianças se sentem seguras para expressar seus sentimentos.",
-                ebook: "Guia-Pai-Empatico.pdf"
-            },
-            flexivel_desenvolvimento_ouvir: {
-                title: "O Pai Presente e Flexível",
-                description: "Você é um pai que adapta seu estilo às necessidades individuais de cada filho. Você valoriza a escuta ativa e a compreensão emocional acima de regras rígidas. Seu paternidade é caracterizada pela capacidade de estar presente e responder com sensibilidade às situações.",
-                ebook: "Guia-Pai-Presente.pdf"
-            },
-            instintivo_felicidade_distrair: {
-                title: "O Pai Descontraído",
-                description: "Você é um pai que segue seu instinto e prioriza a felicidade e diversão em família. Você acredita em aprender pela experiência e criar momentos alegres. Seu estilo traz leveza e espontaneidade para a paternidade.",
-                ebook: "Guia-Pai-Descontraido.pdf"
-            },
-            flexivel_sucesso_comunidade: {
-                title: "O Pai Colaborativo",
-                description: "Você é um pai que se adapta bem a novas situações e busca apoio em comunidades de outros pais. Você acredita na importância da rede de suporte e usa essas conexões para preparar seus filhos para o sucesso. Você aprende tanto ouvindo quanto fazendo.",
-                ebook: "Guia-Pai-Colaborativo.pdf"
-            }
+    </div>
+</div>
+<script>
+(function() {
+    var SUPABASE_URL = 'https://pahphvyepmwylstbguzf.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhaHBodnllcG13eWxzdGJndXpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMzY4OTgsImV4cCI6MjA5MDgxMjg5OH0.tOejwp4rQQxVrpZA83g2DCc0XdEPOF9TRUopkct-4-I';
+    var urlParams = new URLSearchParams(window.location.search);
+    var utmData = {
+        utm_source: urlParams.get('utm_source') || null,
+        utm_medium: urlParams.get('utm_medium') || null,
+        utm_campaign: urlParams.get('utm_campaign') || null
+    };
+    var answers = {};
+    var leadData = {};
+    var currentQuestion = 1;
+    var totalQuestions = 4;
+    var progressFill = document.getElementById('progress-fill');
+    var progressText = document.getElementById('progress-text');
+    var slides = document.querySelectorAll('.question-slide');
+    var resultScreen = document.getElementById('result-screen');
+    var captureScreen = document.getElementById('capture-screen');
+    var questionsContainer = document.getElementById('questions');
+    var profiles = {
+        'construtor': {
+            title: 'O Pai <em>Construtor</em>',
+            subtitle: 'Come\u00e7a do zero com coragem',
+            description: 'Voc\u00ea reconhece que precisa construir uma nova hist\u00f3ria. Talvez n\u00e3o tenha tido o melhor exemplo, mas decidiu que com voc\u00ea vai ser diferente. Seu guia vai te mostrar exatamente por onde come\u00e7ar \u2014 passo a passo, sem julgamento.',
+            traits: ['Determinado', 'Rec\u00e9m-desperto', 'Em constru\u00e7\u00e3o']
+        },
+        'presente': {
+            title: 'O Pai <em>Presente</em>',
+            subtitle: 'Est\u00e1 ali, quer fazer melhor',
+            description: 'Voc\u00ea j\u00e1 est\u00e1 no jogo. Tem tempo, tem vontade \u2014 mas sente que falta dire\u00e7\u00e3o. Seu guia vai te dar atividades pr\u00e1ticas e conversas guiadas pra transformar presen\u00e7a f\u00edsica em conex\u00e3o real.',
+            traits: ['Dispon\u00edvel', 'Intencional', 'Buscando dire\u00e7\u00e3o']
+        },
+        'estrategista': {
+            title: 'O Pai <em>Estrategista</em>',
+            subtitle: 'Quer profundidade e m\u00e9todo',
+            description: 'Voc\u00ea j\u00e1 entende a import\u00e2ncia de estar presente e quer ir al\u00e9m. Busca ferramentas, valores e uma forma estruturada de ensinar seu filho. O guia vai acelerar essa jornada com conte\u00fado denso e aplic\u00e1vel.',
+            traits: ['Focado', 'Disciplinado', 'Vision\u00e1rio']
+        },
+        'reconectando': {
+            title: 'O Pai <em>Reconectando</em>',
+            subtitle: 'Quer reconquistar o v\u00ednculo',
+            description: 'Algo se distanciou \u2014 pelo trabalho, pela rotina ou por escolhas do passado. Mas voc\u00ea decidiu voltar. Seu guia vai te ajudar a reconstruir a ponte com seu filho, uma conversa de cada vez.',
+            traits: ['Corajoso', 'Vulner\u00e1vel', 'Persistente']
+        }
+    };
+    function saveToMailerLite(data) {
+        if (!data.email) return;
+        fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: data.nome,
+                email: data.email,
+                phone: data.whatsapp || '',
+                profile: data.perfil || ''
+            })
+        }).then(function(res) {
+            if (res.ok) console.log('Lead salvo no MailerLite');
+        }).catch(function(err) {
+            console.error('Erro MailerLite:', err);
+        });
+    }
+    function saveLead(data) {
+        var payload = {
+            nome: data.nome,
+            email: data.email || null,
+            whatsapp: data.whatsapp,
+            perfil: data.perfil,
+            respostas: data.respostas,
+            utm_source: utmData.utm_source,
+            utm_medium: utmData.utm_medium,
+            utm_campaign: utmData.utm_campaign
         };
-
-        const defaultProfile = {
-            title: "O Seu Perfil de Pai",
-            description: "Baseado em suas respostas, você tem um estilo parental único que combina diferentes abordagens. O importante é que você está empenhado em ser o melhor pai possível para seus filhos. Cada pai tem seu próprio caminho, e não há uma forma 'certa' de ser pai.",
-            ebook: "Guia-Completo-Paternidade.pdf"
-        };
-
-        let currentQuestion = 0;
-        const totalQuestions = 5;
-
-        function changeQuestion(direction) {
-            const questionSections = document.querySelectorAll('.question-section');
-            const currentSection = questionSections[currentQuestion];
-            const selectedOption = currentSection.querySelector('input[type="radio"]:checked');
-
-            if (!selectedOption && direction === 1) {
-                alert('Por favor, selecione uma resposta antes de continuar.');
-                return;
+        fetch(SUPABASE_URL + '/rest/v1/leads_pai_presente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY,
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+        }).then(function(res) {
+            if (res.ok) {
+                console.log('Lead salvo no Supabase com sucesso');
+            } else {
+                console.error('Erro ao salvar lead:', res.status);
             }
-
-            currentQuestion += direction;
-
-            if (currentQuestion < 0) currentQuestion = 0;
-            if (currentQuestion >= totalQuestions) {
-                showResults();
-                return;
+        }).catch(function(err) {
+            console.error('Erro de rede ao salvar lead:', err);
+        });
+    }
+    function calculateProfile() {
+        var d = answers.dificuldade || '';
+        var m = answers.motivacao || '';
+        var t = answers.tempo || '';
+        if (t === 'rejeitado' || (t === 'pouco' && d === 'presenca')) return 'reconectando';
+        if (m === 'ciclo' || m === 'medo' || m === 'inicio') {
+            if (d === 'comunicacao' || d === 'disciplina') return 'construtor';
+        }
+        if (m === 'aprofundar' || d === 'educacao') return 'estrategista';
+        if (t === 'medio' || t === 'perdido') return 'presente';
+        if (m === 'ciclo' || m === 'medo') return 'construtor';
+        if (m === 'inicio') return 'presente';
+        return 'presente';
+    }
+    function showCapture() {
+        questionsContainer.style.display = 'none';
+        document.querySelector('.progress-bar').style.display = 'none';
+        progressText.style.display = 'none';
+        document.querySelector('.quiz-header').style.display = 'none';
+        captureScreen.classList.add('active');
+        setTimeout(function() { document.getElementById('input-nome').focus(); }, 600);
+    }
+    window.showResult = function() {
+        var profileKey = calculateProfile();
+        var p = profiles[profileKey];
+        document.getElementById('result-badge').textContent = 'Seu perfil';
+        document.getElementById('result-title').innerHTML = p.title;
+        document.getElementById('result-subtitle').textContent = p.subtitle;
+        document.getElementById('result-description').textContent = p.description;
+        var traitsContainer = document.getElementById('result-traits');
+        traitsContainer.innerHTML = '';
+        p.traits.forEach(function(t) {
+            var span = document.createElement('span');
+            span.className = 'trait';
+            span.textContent = t;
+            traitsContainer.appendChild(span);
+        });
+        captureScreen.classList.remove('active');
+        resultScreen.classList.add('active');
+        leadData.perfil = profileKey;
+        leadData.respostas = answers;
+        saveLead(leadData);
+        if (leadData.email) saveToMailerLite(leadData);
+        if (typeof gtag !== 'undefined') gtag('event', 'quiz_resultado', { perfil: profileKey });
+        if (typeof fbq !== 'undefined') fbq('track', 'CompleteRegistration', { content_name: 'quiz_diagnostico', content_category: profileKey });
+    };
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    window.submitCapture = function() {
+        var nome = document.getElementById('input-nome').value.trim();
+        var email = document.getElementById('input-email').value.trim();
+        var whats = document.getElementById('input-whats').value.trim().replace(/\D/g, '');
+        var valid = true;
+        document.getElementById('error-nome').classList.remove('show');
+        document.getElementById('error-email').classList.remove('show');
+        document.getElementById('error-whats').classList.remove('show');
+        document.getElementById('input-nome').classList.remove('input-error');
+        document.getElementById('input-email').classList.remove('input-error');
+        document.getElementById('input-whats').parentElement.classList.remove('input-error');
+        if (!nome || nome.length < 2) {
+            document.getElementById('error-nome').classList.add('show');
+            document.getElementById('input-nome').classList.add('input-error');
+            valid = false;
+        }
+        if (email && !isValidEmail(email)) {
+            document.getElementById('error-email').classList.add('show');
+            document.getElementById('input-email').classList.add('input-error');
+            valid = false;
+        }
+        if (!whats || whats.length < 10 || whats.length > 11) {
+            document.getElementById('error-whats').classList.add('show');
+            document.getElementById('input-whats').parentElement.classList.add('input-error');
+            valid = false;
+        }
+        if (!valid) return;
+        leadData.nome = nome;
+        leadData.email = email || null;
+        leadData.whatsapp = '+55' + whats;
+        if (typeof gtag !== 'undefined') gtag('event', 'lead_capturado', { nome: nome, pagina: 'quiz' });
+        if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'captura_quiz' });
+        window.showResult();
+    };
+    function goToQuestion(num) {
+        slides.forEach(function(s) { s.classList.remove('active'); });
+        var next = document.querySelector('[data-question="' + num + '"]');
+        if (next) {
+            next.classList.add('active');
+            currentQuestion = num;
+            progressFill.style.width = ((num - 1) / totalQuestions * 100) + '%';
+            progressText.textContent = 'Pergunta ' + num + ' de ' + totalQuestions;
+        }
+    }
+    document.addEventListener('click', function(e) {
+        var option = e.target.closest('.option');
+        if (!option) return;
+        var siblings = option.parentElement.querySelectorAll('.option');
+        siblings.forEach(function(s) { s.classList.remove('selected'); });
+        option.classList.add('selected');
+        answers[option.getAttribute('data-tag')] = option.getAttribute('data-value');
+        if (currentQuestion === 1) {
+            if (typeof fbq !== 'undefined') fbq('track', 'ViewContent', { content_name: 'quiz_iniciado' });
+            if (typeof gtag !== 'undefined') gtag('event', 'quiz_iniciado');
+        }
+        setTimeout(function() {
+            if (currentQuestion < totalQuestions) {
+                goToQuestion(currentQuestion + 1);
+            } else {
+                progressFill.style.width = '100%';
+                setTimeout(showCapture, 600);
             }
-
-            updateProgress();
-            updateQuestionDisplay();
+        }, 400);
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && captureScreen.classList.contains('active')) {
+            e.preventDefault();
+            window.submitCapture();
         }
-
-        function updateQuestionDisplay() {
-            const questionSections = document.querySelectorAll('.question-section');
-            questionSections.forEach((section, index) => {
-                section.classList.remove('active');
-                if (index === currentQuestion) {
-                    section.classList.add('active');
-                }
-            });
-
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            prevBtn.style.display = currentQuestion === 0 ? 'none' : 'block';
-            nextBtn.textContent = currentQuestion === totalQuestions - 1 ? 'Ver Resultados' : 'Próxima →';
-        }
-
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
-
-        function getAnswers() {
-            const answers = {};
-            for (let i = 1; i <= totalQuestions; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected) {
-                    answers[`q${i}`] = selected.value;
-                }
-            }
-            return answers;
-        }
-
-        function showResults() {
-            fbq('track', 'ViewContent', {
-                content_name: 'quiz_completed',
-                content_category: 'diagnostic'
-            });
-
-            const answers = getAnswers();
-            
-            // Build profile key based on answers
-            const profileKey = `${answers.q1}_${answers.q2}_${answers.q3}`;
-            
-            let profile = profiles[profileKey] || defaultProfile;
-
-            const resultsContainer = document.getElementById('resultsContainer');
-            const quizContainer = document.querySelector('.quiz-container');
-
-            document.getElementById('profileTitle').textContent = profile.title;
-            document.getElementById('profileDescription').textContent = profile.description;
-            document.getElementById('ebookBtn').href = `/download/${profile.ebook}`;
-
-            quizContainer.style.display = 'none';
-            resultsContainer.classList.add('show');
-
-            // Scroll to results
-            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function handleEbookDownload(event) {
-            event.preventDefault();
-            const ebookBtn = document.getElementById('ebookBtn');
-            const href = ebookBtn.getAttribute('href');
-            
-            fbq('track', 'ViewContent', {
-                content_name: 'ebook_download',
-                content_category: 'lead_magnet'
-            });
-
-            fbq('trackCustom', 'EbookDownload', {
-                content_name: 'parenting_guide'
-            });
-
-            // Simulate download
-            window.open(href, '_blank');
-        }
-
-        function handleInstagramClick(event) {
-            event.preventDefault();
-            
-            fbq('trackCustom', 'InstagramClick', {
-                content_name: 'perfil_instagram'
-            });
-
-            // Open Instagram
-            window.open('https://instagram.com/paipresente', '_blank');
-        }
-
-        function resetQuiz() {
-            currentQuestion = 0;
-            document.querySelectorAll('input[type="radio"]').forEach(input => {
-                input.checked = false;
-            });
-            document.getElementById('resultsContainer').classList.remove('show');
-            document.querySelector('.quiz-container').style.display = 'block';
-            updateProgress();
-            updateQuestionDisplay();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Initialize
-        updateProgress();
-        updateQuestionDisplay();
-    </script>
+    });
+})();
+function trackDownload() {
+    if (typeof gtag !== 'undefined') gtag('event', 'download_guia', { pagina: 'quiz' });
+    if (typeof fbq !== 'undefined') fbq('trackCustom', 'EbookDownload', { content_name: 'guia_pai_presente' });
+}
+function trackInstagram() {
+    if (typeof gtag !== 'undefined') gtag('event', 'instagram_follow_click', { pagina: 'quiz' });
+    if (typeof fbq !== 'undefined') fbq('trackCustom', 'InstagramClick', { content_name: 'perfil_instagram' });
+}
+</script>
 </body>
 </html>
