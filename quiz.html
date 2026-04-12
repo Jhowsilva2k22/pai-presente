@@ -432,111 +432,91 @@
 
         let currentQuestion = 0;
         let answers = [null, null, null, null];
+        let questionIndex = 0;
 
-        function initQuiz() {
-            renderQuestions();
-            setupEventListeners();
+        function init() {
+            renderQuestion(0);
         }
 
-        function renderQuestions() {
-            const questionCards = document.querySelectorAll('.question-card');
-            questionCards.forEach((card, index) => {
-                const optionsContainer = card.querySelector('.options');
-                optionsContainer.innerHTML = '';
-                
-                questions[index].options.forEach((option, optionIndex) => {
-                    const optionDiv = document.createElement('div');
-                    optionDiv.className = 'option';
-                    optionDiv.textContent = option;
-                    optionDiv.addEventListener('click', () => selectOption(index, optionIndex, optionDiv));
-                    optionsContainer.appendChild(optionDiv);
-                });
-            });
+        function getProfileKey() {
+            if (answers[0] === 0) return 'tradicional_educacao_diario_tempo';
+            if (answers[0] === 1) return 'moderno_emocional_semanal_comunicacao';
+            return 'equilibrado_desenvolvimento_conforme_necessario_tempo';
         }
 
-        function selectOption(questionIndex, optionIndex, element) {
-            const optionsInQuestion = document.querySelectorAll(`.question-card:nth-child(${questionIndex + 1}) .option`);
-            optionsInQuestion.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            answers[questionIndex] = optionIndex;
-        }
+        function renderQuestion(index) {
+            const question = questions[index];
+            const optionsHTML = question.options.map((option, i) => {
+                return `<div class="option" onclick="selectOption(${index}, ${i})">${option}</div>`;
+            }).join('');
 
-        function setupEventListeners() {
-            document.querySelectorAll('.question-card').forEach((card, index) => {
-                const options = card.querySelectorAll('.option');
-                options.forEach((option, optionIndex) => {
-                    option.addEventListener('click', () => {
-                        selectOption(index, optionIndex, option);
-                    });
-                });
-            });
+            document.querySelector('.questions-container').innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Pergunta ${index + 1} de ${questions.length}</div>
+                    <h2>${question.question}</h2>
+                    <div class="options">${optionsHTML}</div>
+                    <div class="button-group">
+                        ${index > 0 ? '<button type="button" class="btn btn-secondary" onclick="prevQuestion()">Voltar</button>' : ''}
+                        <button type="button" class="btn btn-primary" onclick="nextQuestion()" style="flex: ${index > 0 ? '1' : '1'}">Próxima</button>
+                    </div>
+                </div>
+            `;
 
-            document.getElementById('backBtn').addEventListener('click', goBack);
-            document.getElementById('leadForm').addEventListener('submit', handleSubmit);
-        }
-
-        function nextQuestion() {
-            if (answers[currentQuestion] === null) {
-                alert('Por favor, selecione uma opção');
-                return;
-            }
-
-            currentQuestion++;
-
-            if (currentQuestion >= questions.length) {
-                showForm();
-            } else {
-                updateProgress();
-                updateQuestionDisplay();
-            }
-        }
-
-        function goBack() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                updateProgress();
-                updateQuestionDisplay();
-            } else {
-                document.querySelector('.questions-container').classList.add('active');
-                document.querySelector('.form-container').classList.remove('active');
-            }
-        }
-
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            const progress = ((index + 1) / questions.length) * 100;
             document.querySelector('.progress-fill').style.width = progress + '%';
         }
 
-        function updateQuestionDisplay() {
-            const cards = document.querySelectorAll('.question-card');
-            cards.forEach((card, index) => {
-                if (index === currentQuestion) {
-                    card.classList.add('active');
-                } else {
-                    card.classList.remove('active');
-                }
-            });
+        function selectOption(questionIndex, optionIndex) {
+            answers[questionIndex] = optionIndex;
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+        }
+
+        function nextQuestion() {
+            if (answers[questionIndex] === null) {
+                alert('Por favor, selecione uma opção');
+                return;
+            }
+            
+            questionIndex++;
+            if (questionIndex >= questions.length) {
+                showForm();
+            } else {
+                renderQuestion(questionIndex);
+            }
+        }
+
+        function prevQuestion() {
+            if (questionIndex > 0) {
+                questionIndex--;
+                renderQuestion(questionIndex);
+            }
         }
 
         function showForm() {
             document.querySelector('.questions-container').classList.remove('active');
             document.querySelector('.form-container').classList.add('active');
+            document.getElementById('backBtn').addEventListener('click', () => {
+                questionIndex--;
+                document.querySelector('.questions-container').classList.add('active');
+                document.querySelector('.form-container').classList.remove('active');
+                renderQuestion(questionIndex);
+            });
         }
 
         async function handleSubmit(e) {
             e.preventDefault();
-
+            
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
 
-            // Track event with Google Analytics
             gtag('event', 'lead_submit', {
                 'email': email,
                 'phone': phone
             });
 
-            // Track with Meta Pixel
             fbq('track', 'Lead', {
                 content_name: 'Quiz Lead',
                 content_type: 'lead_form',
@@ -544,67 +524,38 @@
                 currency: 'BRL'
             });
 
-            // Send to MailerLite
             try {
-                const mailerliteResponse = await fetch('https://api.mailerlite.com/v1/subscribers', {
+                const subscriberData = {
+                    email: email,
+                    fields: {
+                        name: fullName,
+                        phone: phone,
+                        profile: getProfileKey()
+                    }
+                };
+
+                const response = await fetch('https://api.mailerlite.com/v1/subscribers', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer YOUR_MAILERLITE_API_KEY',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        email: email,
-                        fields: {
-                            name: fullName,
-                            phone: phone,
-                            quiz_profile: getProfileKey()
-                        },
-                        groups: ['YOUR_GROUP_ID']
-                    })
-                });
-
-                if (!mailerliteResponse.ok) {
-                    console.warn('MailerLite API error, using fallback');
-                }
+                    body: JSON.stringify(subscriberData)
+                }).catch(err => console.error('Subscription error:', err));
             } catch (error) {
-                console.warn('MailerLite request failed, using fallback', error);
+                console.error('Error:', error);
             }
-
-            // Show success message
+            
             document.querySelector('.form-container').classList.remove('active');
             document.querySelector('.success-message').classList.add('active');
 
-            // Redirect after 2 seconds
-            setTimeout(() => {
+            setTimeout(function() {
                 window.location.href = 'index.html?concluido=1';
             }, 2000);
         }
 
-        function getProfileKey() {
-            // Map answers to profile key
-            const answerString = answers.join('-');
-            // Simplified profile mapping
-            if (answers[0] === 0) return 'tradicional_educacao_diario_tempo';
-            if (answers[0] === 1) return 'moderno_emocional_semanal_comunicacao';
-            return 'equilibrado_desenvolvimento_conforme_necessario_tempo';
-        }
-
-        // Add Next button functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            initQuiz();
-
-            // Add next button to each question card
-            const questionCards = document.querySelectorAll('.question-card');
-            questionCards.forEach((card) => {
-                const buttonGroup = document.createElement('div');
-                buttonGroup.className = 'button-group';
-                buttonGroup.innerHTML = '<button type="button" class="btn btn-primary" style="flex: 1;">Próxima</button>';
-                buttonGroup.querySelector('button').addEventListener('click', nextQuestion);
-                card.appendChild(buttonGroup);
-            });
-
-            updateProgress();
-        });
+        document.getElementById('leadForm').addEventListener('submit', handleSubmit);
+        renderQuestion(0);
     </script>
 
 </body>
