@@ -668,15 +668,18 @@
         </div>
     </div>
 
-    <!-- CAPTURA WHATSAPP -->
+    <!-- CAPTURA -->
     <div class="capture-screen" id="capture-screen">
         <div class="gold-accent" style="width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 24px;"></div>
         <h2 class="capture-title">Seu diagn&oacute;stico est&aacute; <em>pronto</em></h2>
-        <p class="capture-subtitle">Coloque seu nome e WhatsApp para receber o resultado, o guia pr&aacute;tico e conte&uacute;do exclusivo.</p>
+        <p class="capture-subtitle">Preencha abaixo para receber o resultado, o guia pr&aacute;tico e conte&uacute;do exclusivo.</p>
 
         <div class="capture-form" id="capture-form">
             <input type="text" class="input-field" id="input-nome" placeholder="Seu primeiro nome" autocomplete="given-name">
             <p class="error-msg" id="error-nome">Informe seu nome</p>
+
+            <input type="email" class="input-field" id="input-email" placeholder="Seu melhor e-mail" autocomplete="email" inputmode="email">
+            <p class="error-msg" id="error-email">Informe um e-mail v&aacute;lido</p>
 
             <div class="whats-input-wrapper">
                 <div class="whats-prefix">
@@ -721,11 +724,25 @@
 <script>
 (function() {
 
+    // ═══════ SUPABASE CONFIG ═══════
+    var SUPABASE_URL = 'https://pahphvyepmwylstbguzf.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhaHBodnllcG13eWxzdGJndXpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMzY4OTgsImV4cCI6MjA5MDgxMjg5OH0.tOejwp4rQQxVrpZA83g2DCc0XdEPOF9TRUopkct-4-I';
+
+    // ═══════ CAPTURA UTM DA URL ═══════
+    var urlParams = new URLSearchParams(window.location.search);
+    var utmData = {
+        utm_source: urlParams.get('utm_source') || null,
+        utm_medium: urlParams.get('utm_medium') || null,
+        utm_campaign: urlParams.get('utm_campaign') || null
+    };
+
+    // ═══════ ESTADO ═══════
     var answers = {};
     var leadData = {};
     var currentQuestion = 1;
     var totalQuestions = 4;
 
+    // ═══════ ELEMENTOS ═══════
     var progressFill = document.getElementById('progress-fill');
     var progressText = document.getElementById('progress-text');
     var slides = document.querySelectorAll('.question-slide');
@@ -733,6 +750,7 @@
     var captureScreen = document.getElementById('capture-screen');
     var questionsContainer = document.getElementById('questions');
 
+    // ═══════ PERFIS ═══════
     var profiles = {
         'construtor': {
             title: 'O Pai <em>Construtor</em>',
@@ -760,6 +778,40 @@
         }
     };
 
+    // ═══════ SALVAR LEAD NO SUPABASE ═══════
+    function saveLead(data) {
+        var payload = {
+            nome: data.nome,
+            email: data.email || null,
+            whatsapp: data.whatsapp,
+            perfil: data.perfil,
+            respostas: data.respostas,
+            utm_source: utmData.utm_source,
+            utm_medium: utmData.utm_medium,
+            utm_campaign: utmData.utm_campaign
+        };
+
+        fetch(SUPABASE_URL + '/rest/v1/leads_pai_presente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY,
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+        }).then(function(res) {
+            if (res.ok) {
+                console.log('Lead salvo no Supabase com sucesso');
+            } else {
+                console.error('Erro ao salvar lead:', res.status);
+            }
+        }).catch(function(err) {
+            console.error('Erro de rede ao salvar lead:', err);
+        });
+    }
+
+    // ═══════ CALCULAR PERFIL ═══════
     function calculateProfile() {
         var d = answers.dificuldade || '';
         var m = answers.motivacao || '';
@@ -784,6 +836,7 @@
         return 'presente';
     }
 
+    // ═══════ TELA DE CAPTURA ═══════
     function showCapture() {
         questionsContainer.style.display = 'none';
         document.querySelector('.progress-bar').style.display = 'none';
@@ -797,6 +850,7 @@
         }, 600);
     }
 
+    // ═══════ MOSTRAR RESULTADO ═══════
     window.showResult = function() {
         var profileKey = calculateProfile();
         var p = profiles[profileKey];
@@ -821,6 +875,9 @@
         leadData.perfil = profileKey;
         leadData.respostas = answers;
 
+        // Salva no Supabase
+        saveLead(leadData);
+
         if (typeof gtag !== 'undefined') {
             gtag('event', 'quiz_resultado', {
                 perfil: profileKey,
@@ -833,32 +890,37 @@
                 content_category: profileKey
             });
         }
-
-        // INTEGRAÇÃO: envie leadData para sua API/Webhook
-        // leadData contém: { nome, whatsapp, perfil, respostas }
-        //
-        // fetch('https://SEU-WEBHOOK-AQUI.com', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(leadData)
-        // });
-
-        console.log('Lead capturado:', JSON.stringify(leadData));
     };
 
+    // ═══════ VALIDAR EMAIL ═══════
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // ═══════ VALIDAR E ENVIAR CAPTURA ═══════
     window.submitCapture = function() {
         var nome = document.getElementById('input-nome').value.trim();
+        var email = document.getElementById('input-email').value.trim();
         var whats = document.getElementById('input-whats').value.trim().replace(/\D/g, '');
         var valid = true;
 
+        // Reset erros
         document.getElementById('error-nome').classList.remove('show');
+        document.getElementById('error-email').classList.remove('show');
         document.getElementById('error-whats').classList.remove('show');
         document.getElementById('input-nome').classList.remove('input-error');
+        document.getElementById('input-email').classList.remove('input-error');
         document.getElementById('input-whats').parentElement.classList.remove('input-error');
 
         if (!nome || nome.length < 2) {
             document.getElementById('error-nome').classList.add('show');
             document.getElementById('input-nome').classList.add('input-error');
+            valid = false;
+        }
+
+        if (email && !isValidEmail(email)) {
+            document.getElementById('error-email').classList.add('show');
+            document.getElementById('input-email').classList.add('input-error');
             valid = false;
         }
 
@@ -871,6 +933,7 @@
         if (!valid) return;
 
         leadData.nome = nome;
+        leadData.email = email || null;
         leadData.whatsapp = '+55' + whats;
 
         if (typeof gtag !== 'undefined') {
@@ -880,12 +943,13 @@
             });
         }
         if (typeof fbq !== 'undefined') {
-            fbq('track', 'Lead', { content_name: 'whatsapp_captura' });
+            fbq('track', 'Lead', { content_name: 'captura_quiz' });
         }
 
         window.showResult();
     };
 
+    // ═══════ NAVEGACAO ═══════
     function goToQuestion(num) {
         slides.forEach(function(s) { s.classList.remove('active'); });
 
@@ -898,6 +962,7 @@
         }
     }
 
+    // ═══════ CLIQUE NAS OPCOES ═══════
     document.addEventListener('click', function(e) {
         var option = e.target.closest('.option');
         if (!option) return;
@@ -920,6 +985,7 @@
         }, 400);
     });
 
+    // ═══════ ENTER → SUBMIT ═══════
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && captureScreen.classList.contains('active')) {
             e.preventDefault();
@@ -929,6 +995,7 @@
 
 })();
 
+// ═══════ RASTREAMENTO DOWNLOAD ═══════
 function trackDownload() {
     if (typeof gtag !== 'undefined') {
         gtag('event', 'download_guia', { pagina: 'quiz' });
