@@ -178,6 +178,7 @@
             transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
             -webkit-tap-highlight-color: transparent;
             position: relative;
+            user-select: none;
         }
         .option:hover {
             border-color: rgba(184, 149, 106, 0.3);
@@ -389,6 +390,7 @@
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
             margin-top: 8px;
+            user-select: none;
         }
         .capture-submit::before {
             content: '';
@@ -457,6 +459,7 @@
             position: relative;
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         .download-btn::before {
             content: '';
@@ -532,6 +535,7 @@
             transition: all 0.4s ease;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         .instagram-btn:hover,
         .instagram-btn:active {
@@ -619,10 +623,10 @@
         <div class="question-slide" data-question="4">
             <p class="question-text">Qual dessas frases mais te representa hoje?</p>
             <div class="options">
-                <button class="option" data-value="ciclo" data-tag="motivacao">"Quero ser diferente do pai que eu tive."</button>
-                <button class="option" data-value="medo" data-tag="motivacao">"Tenho medo de errar com meu filho."</button>
-                <button class="option" data-value="inicio" data-tag="motivacao">"Sei que preciso melhorar, mas n&atilde;o sei como."</button>
-                <button class="option" data-value="aprofundar" data-tag="motivacao">"Estou no caminho certo, s&oacute; quero ir mais fundo."</button>
+                <button class="option" data-value="ciclo" data-tag="motivacao">\"Quero ser diferente do pai que eu tive.\"</button>
+                <button class="option" data-value="medo" data-tag="motivacao">\"Tenho medo de errar com meu filho.\"</button>
+                <button class="option" data-value="inicio" data-tag="motivacao">\"Sei que preciso melhorar, mas n&atilde;o sei como.\"</button>
+                <button class="option" data-value="aprofundar" data-tag="motivacao">\"Estou no caminho certo, s&oacute; quero ir mais fundo.\"</button>
             </div>
         </div>
     </div>
@@ -634,7 +638,7 @@
             <input type="text" class="input-field" id="input-nome" placeholder="Seu primeiro nome" autocomplete="given-name">
             <p class="error-msg" id="error-nome">Informe seu nome</p>
             <input type="email" class="input-field" id="input-email" placeholder="Seu melhor e-mail" autocomplete="email" inputmode="email">
-            <p class="error-msg" id="error-email">Informe um e-mail v&aacute;lido</p>
+            <p class="error-msg" id="error-email">Informe um e-mail válido</p>
             <div class="whats-input-wrapper">
                 <div class="whats-prefix">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -644,11 +648,11 @@
                 </div>
                 <input type="tel" class="input-field" id="input-whats" placeholder="11 99999-9999" autocomplete="tel" inputmode="numeric">
             </div>
-            <p class="error-msg" id="error-whats">Informe um n&uacute;mero v&aacute;lido</p>
+            <p class="error-msg" id="error-whats">Informe um número válido</p>
             <button class="capture-submit" id="btn-submit" onclick="submitCapture()">
-                <span>Ver meu diagn&oacute;stico</span>
+                <span>Ver meu diagnóstico</span>
             </button>
-            <p class="capture-privacy">Seus dados est&atilde;o seguros. Sem spam.</p>
+            <p class="capture-privacy">Seus dados estão seguros. Sem spam.</p>
         </div>
     </div>
     <div class="result-screen" id="result-screen">
@@ -661,17 +665,15 @@
         <a href="https://pahphvyepmwylstbguzf.supabase.co/storage/v1/object/public/ebooks/guia-pai-presente.pdf"
            class="download-btn"
            id="btn-download"
-           target="_blank"
            rel="noopener noreferrer"
            onclick="trackDownload()">
-            <span>Baixe seu guia pr&aacute;tico gratuito <span class="arrow">&rarr;</span></span>
+            <span>Baixe seu guia prático gratuito <span class="arrow">&rarr;</span></span>
         </a>
         <p class="result-note">Preparado especialmente para o seu perfil</p>
         <div class="instagram-cta">
             <p class="instagram-label">Dicas todo dia no Instagram</p>
             <a href="https://instagram.com/eusoujoanderson1"
                class="instagram-btn"
-               target="_blank"
                rel="noopener noreferrer"
                onclick="trackInstagram()">
                 <span>
@@ -709,27 +711,27 @@
     var profiles = {
         'construtor': {
             title: 'O Pai <em>Construtor</em>',
-            subtitle: 'Come\u00e7a do zero com coragem',
-            description: 'Voc\u00ea reconhece que precisa construir uma nova hist\u00f3ria. Talvez n\u00e3o tenha tido o melhor exemplo, mas decidiu que com voc\u00ea vai ser diferente. Seu guia vai te mostrar exatamente por onde come\u00e7ar \u2014 passo a passo, sem julgamento.',
-            traits: ['Determinado', 'Rec\u00e9m-desperto', 'Em constru\u00e7\u00e3o']
+            subtitle: 'Começa do zero com coragem',
+            description: 'Você reconhece que precisa construir uma nova história. Talvez não tenha tido o melhor exemplo, mas decidiu que com você vai ser diferente. Seu guia vai te mostrar exatamente por onde começar — passo a passo, sem julgamento.',
+            traits: ['Determinado', 'Recém-desperto', 'Em construção']
         },
         'presente': {
             title: 'O Pai <em>Presente</em>',
-            subtitle: 'Est\u00e1 ali, quer fazer melhor',
-            description: 'Voc\u00ea j\u00e1 est\u00e1 no jogo. Tem tempo, tem vontade \u2014 mas sente que falta dire\u00e7\u00e3o. Seu guia vai te dar atividades pr\u00e1ticas e conversas guiadas pra transformar presen\u00e7a f\u00edsica em conex\u00e3o real.',
-            traits: ['Dispon\u00edvel', 'Intencional', 'Buscando dire\u00e7\u00e3o']
+            subtitle: 'Está ali, quer fazer melhor',
+            description: 'Você já está no jogo. Tem tempo, tem vontade — mas sente que falta direção. Seu guia vai te dar atividades práticas e conversas guiadas pra transformar presença física em conexão real.',
+            traits: ['Disponível', 'Intencional', 'Buscando direção']
         },
         'estrategista': {
             title: 'O Pai <em>Estrategista</em>',
-            subtitle: 'Quer profundidade e m\u00e9todo',
-            description: 'Voc\u00ea j\u00e1 entende a import\u00e2ncia de estar presente e quer ir al\u00e9m. Busca ferramentas, valores e uma forma estruturada de ensinar seu filho. O guia vai acelerar essa jornada com conte\u00fado denso e aplic\u00e1vel.',
-            traits: ['Focado', 'Disciplinado', 'Vision\u00e1rio']
+            subtitle: 'Quer profundidade e método',
+            description: 'Você já entende a importância de estar presente e quer ir além. Busca ferramentas, valores e uma forma estruturada de ensinar seu filho. O guia vai acelerar essa jornada com conteúdo denso e aplicável.',
+            traits: ['Focado', 'Disciplinado', 'Visionário']
         },
         'reconectando': {
             title: 'O Pai <em>Reconectando</em>',
-            subtitle: 'Quer reconquistar o v\u00ednculo',
-            description: 'Algo se distanciou \u2014 pelo trabalho, pela rotina ou por escolhas do passado. Mas voc\u00ea decidiu voltar. Seu guia vai te ajudar a reconstruir a ponte com seu filho, uma conversa de cada vez.',
-            traits: ['Corajoso', 'Vulner\u00e1vel', 'Persistente']
+            subtitle: 'Quer reconquistar o vínculo',
+            description: 'Algo se distanciou — pelo trabalho, pela rotina ou por escolhas do passado. Mas você decidiu voltar. Seu guia vai te ajudar a reconstruir a ponte com seu filho, uma conversa de cada vez.',
+            traits: ['Corajoso', 'Vulnerável', 'Persistente']
         }
     };
     function saveToMailerLite(data) {
