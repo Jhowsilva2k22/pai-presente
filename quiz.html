@@ -12,12 +12,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <!-- GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X36LFF3SYR"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PVZR8G8M3F"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-X36LFF3SYR');
+        gtag('config', 'G-PVZR8G8M3F');
     </script>
     <!-- META PIXEL -->
     <script>
@@ -178,7 +178,6 @@
             transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
             -webkit-tap-highlight-color: transparent;
             position: relative;
-            user-select: none;
         }
         .option:hover {
             border-color: rgba(184, 149, 106, 0.3);
@@ -390,7 +389,6 @@
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
             margin-top: 8px;
-            user-select: none;
         }
         .capture-submit::before {
             content: '';
@@ -460,6 +458,7 @@
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            -webkit-user-select: none;
         }
         .download-btn::before {
             content: '';
@@ -503,6 +502,96 @@
             text-transform: uppercase;
             color: var(--text-subtle);
         }
+        /* ─── Botão comunidade pós-download ─── */
+        .community-redirect {
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            display: none;
+        }
+        .community-redirect.visible {
+            display: block;
+            animation: slideIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+        .community-redirect-label {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(37, 211, 102, 0.5);
+            margin-bottom: 14px;
+        }
+        .community-back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px 32px;
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            border-radius: 0;
+            background: transparent;
+            color: var(--whats-green);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .community-back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--whats-green);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 0;
+        }
+        .community-back-btn:hover::before,
+        .community-back-btn:active::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .community-back-btn:hover,
+        .community-back-btn:active {
+            color: var(--warm-black);
+            border-color: var(--whats-green);
+        }
+        .community-back-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .community-back-btn .arrow {
+            font-weight: 300;
+            font-size: 16px;
+            transition: transform 0.5s ease;
+        }
+        .community-back-btn:hover .arrow { transform: translateX(5px); }
+        .whats-icon-sm {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        @keyframes communityPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+            50% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0.1); }
+        }
+        .community-back-btn.pulse {
+            animation: communityPulse 2.5s ease-in-out infinite;
+        }
+
         .instagram-cta {
             margin-top: 28px;
             width: 100%;
@@ -536,6 +625,7 @@
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            -webkit-user-select: none;
         }
         .instagram-btn:hover,
         .instagram-btn:active {
@@ -585,8 +675,8 @@
 <div class="quiz-page">
     <div class="quiz-header reveal reveal-d1">
         <div class="gold-accent"></div>
-        <h1>Seu <em>diagn&oacute;stico</em></h1>
-        <p>Responda com sinceridade. Em menos de 1 minuto voc&ecirc; descobre seu perfil como pai.</p>
+        <h1>Seu <em>diagnóstico</em></h1>
+        <p>Responda com sinceridade. Em menos de 1 minuto você descobre seu perfil como pai.</p>
     </div>
     <div class="progress-bar reveal reveal-d2">
         <div class="progress-fill" id="progress-fill"></div>
@@ -594,46 +684,46 @@
     <p class="progress-text reveal reveal-d3" id="progress-text">Pergunta 1 de 4</p>
     <div class="question-container reveal reveal-d4" id="questions">
         <div class="question-slide active" data-question="1">
-            <p class="question-text">Quantos filhos voc&ecirc; tem &mdash; e qual a faixa de idade?</p>
+            <p class="question-text">Quantos filhos você tem &mdash; e qual a faixa de idade?</p>
             <div class="options">
                 <button class="option" data-value="primeira-infancia" data-tag="perfil">Tenho filho(s) de 0 a 5 anos</button>
                 <button class="option" data-value="infancia" data-tag="perfil">Tenho filho(s) de 6 a 12 anos</button>
                 <button class="option" data-value="misto" data-tag="perfil">Tenho filhos em faixas diferentes</button>
-                <button class="option" data-value="pre-pai" data-tag="perfil">Ainda n&atilde;o sou pai, estou me preparando</button>
+                <button class="option" data-value="pre-pai" data-tag="perfil">Ainda não sou pai, estou me preparando</button>
             </div>
         </div>
         <div class="question-slide" data-question="2">
-            <p class="question-text">Qual &eacute; sua maior dificuldade como pai hoje?</p>
+            <p class="question-text">Qual é sua maior dificuldade como pai hoje?</p>
             <div class="options">
-                <button class="option" data-value="comunicacao" data-tag="dificuldade">N&atilde;o sei como conversar de um jeito que ele realmente me ou&ccedil;a</button>
+                <button class="option" data-value="comunicacao" data-tag="dificuldade">Não sei como conversar de um jeito que ele realmente me ouça</button>
                 <button class="option" data-value="presenca" data-tag="dificuldade">Trabalho muito e sinto que estou perdendo momentos</button>
                 <button class="option" data-value="disciplina" data-tag="dificuldade">Tenho dificuldade de colocar limites sem brigar</button>
-                <button class="option" data-value="educacao" data-tag="dificuldade">Quero ensinar valores e educa&ccedil;&atilde;o financeira, mas n&atilde;o sei por onde</button>
+                <button class="option" data-value="educacao" data-tag="dificuldade">Quero ensinar valores e educação financeira, mas não sei por onde</button>
             </div>
         </div>
         <div class="question-slide" data-question="3">
-            <p class="question-text">Quanto tempo por dia voc&ecirc; consegue estar de verdade presente com seu filho?</p>
+            <p class="question-text">Quanto tempo por dia você consegue estar de verdade presente com seu filho?</p>
             <div class="options">
                 <button class="option" data-value="pouco" data-tag="tempo">Menos de 30 minutos</button>
                 <button class="option" data-value="medio" data-tag="tempo">Entre 30 min e 1 hora</button>
                 <button class="option" data-value="perdido" data-tag="tempo">Mais de 1 hora, mas sem saber o que fazer</button>
-                <button class="option" data-value="rejeitado" data-tag="tempo">Tenho tempo, mas meu filho n&atilde;o quer ficar comigo</button>
+                <button class="option" data-value="rejeitado" data-tag="tempo">Tenho tempo, mas meu filho não quer ficar comigo</button>
             </div>
         </div>
         <div class="question-slide" data-question="4">
             <p class="question-text">Qual dessas frases mais te representa hoje?</p>
             <div class="options">
-                <button class="option" data-value="ciclo" data-tag="motivacao">\"Quero ser diferente do pai que eu tive.\"</button>
-                <button class="option" data-value="medo" data-tag="motivacao">\"Tenho medo de errar com meu filho.\"</button>
-                <button class="option" data-value="inicio" data-tag="motivacao">\"Sei que preciso melhorar, mas n&atilde;o sei como.\"</button>
-                <button class="option" data-value="aprofundar" data-tag="motivacao">\"Estou no caminho certo, s&oacute; quero ir mais fundo.\"</button>
+                <button class="option" data-value="ciclo" data-tag="motivacao">"Quero ser diferente do pai que eu tive."</button>
+                <button class="option" data-value="medo" data-tag="motivacao">"Tenho medo de errar com meu filho."</button>
+                <button class="option" data-value="inicio" data-tag="motivacao">"Sei que preciso melhorar, mas não sei como."</button>
+                <button class="option" data-value="aprofundar" data-tag="motivacao">"Estou no caminho certo, só quero ir mais fundo."</button>
             </div>
         </div>
     </div>
     <div class="capture-screen" id="capture-screen">
         <div class="gold-accent" style="width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 24px;"></div>
-        <h2 class="capture-title">Seu diagn&oacute;stico est&aacute; <em>pronto</em></h2>
-        <p class="capture-subtitle">Preencha abaixo para receber o resultado, o guia pr&aacute;tico e conte&uacute;do exclusivo.</p>
+        <h2 class="capture-title">Seu diagnóstico está <em>pronto</em></h2>
+        <p class="capture-subtitle">Preencha abaixo para receber o resultado, o guia prático e conteúdo exclusivo.</p>
         <div class="capture-form" id="capture-form">
             <input type="text" class="input-field" id="input-nome" placeholder="Seu primeiro nome" autocomplete="given-name">
             <p class="error-msg" id="error-nome">Informe seu nome</p>
@@ -662,20 +752,31 @@
         <div class="result-divider"></div>
         <p class="result-description" id="result-description"></p>
         <div class="result-traits" id="result-traits"></div>
-        <a href="https://pahphvyepmwylstbguzf.supabase.co/storage/v1/object/public/ebooks/guia-pai-presente.pdf"
-           class="download-btn"
-           id="btn-download"
-           rel="noopener noreferrer"
-           onclick="trackDownload()">
-            <span>Baixe seu guia prático gratuito <span class="arrow">&rarr;</span></span>
+        <a href="#" class="download-btn" id="btn-download" onclick="handleDownload(event)">
+            <span>Baixar meu guia gratuito <span class="arrow">↓</span></span>
         </a>
         <p class="result-note">Preparado especialmente para o seu perfil</p>
+
+        <!-- COMUNIDADE — aparece após clicar download -->
+        <div class="community-redirect" id="community-redirect">
+            <div style="width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--whats-green),transparent);margin:28px auto 16px;opacity:0.5;"></div>
+            <p class="community-redirect-label">Seu guia está sendo baixado</p>
+            <a href="index.html?concluido=1" class="community-back-btn" onclick="trackCommunityRedirect()">
+                <span class="community-back-inner">
+                    <svg class="whats-icon-sm" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.008a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.999-3.648-.235-.374A9.86 9.86 0 012.15 12.07c.002-5.45 4.437-9.884 9.889-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z" fill="currentColor"/>
+                    </svg>
+                    Acessar a comunidade
+                    <span class="arrow">→</span>
+                </span>
+            </a>
+        </div>
+
         <div class="instagram-cta">
             <p class="instagram-label">Dicas todo dia no Instagram</p>
             <a href="https://instagram.com/eusoujoanderson1"
                class="instagram-btn"
-               rel="noopener noreferrer"
-               onclick="trackInstagram()">
+               onclick="trackInstagram(); return true;">
                 <span>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="1.5"/>
@@ -901,9 +1002,41 @@
         }
     });
 })();
-function trackDownload() {
+function handleDownload(e) {
+    e.preventDefault();
+    var pdfUrl = 'https://pahphvyepmwylstbguzf.supabase.co/storage/v1/object/public/ebooks/guia-pai-presente.pdf';
+    var btn = document.getElementById('btn-download');
+
+    // Tracking
     if (typeof gtag !== 'undefined') gtag('event', 'download_guia', { pagina: 'quiz' });
     if (typeof fbq !== 'undefined') fbq('trackCustom', 'EbookDownload', { content_name: 'guia_pai_presente' });
+
+    // Tenta abrir em nova aba
+    var w = window.open(pdfUrl, '_blank');
+
+    // Se popup foi bloqueado, navega direto
+    if (!w || w.closed || typeof w.closed === 'undefined') {
+        window.location.href = pdfUrl;
+        return;
+    }
+
+    // Mostra botão da comunidade
+    var communityEl = document.getElementById('community-redirect');
+    communityEl.classList.add('visible');
+    setTimeout(function() {
+        var backBtn = document.querySelector('.community-back-btn');
+        if (backBtn) backBtn.classList.add('pulse');
+    }, 800);
+
+    // Atualiza texto do botão download
+    btn.innerHTML = '<span>Guia aberto &#10003;</span>';
+    btn.style.borderColor = 'rgba(184, 149, 106, 0.3)';
+    btn.style.pointerEvents = 'none';
+    btn.style.opacity = '0.5';
+}
+function trackCommunityRedirect() {
+    if (typeof gtag !== 'undefined') gtag('event', 'comunidade_redirect', { pagina: 'quiz' });
+    if (typeof fbq !== 'undefined') fbq('track', 'Contact', { content_name: 'comunidade_pos_download' });
 }
 function trackInstagram() {
     if (typeof gtag !== 'undefined') gtag('event', 'instagram_follow_click', { pagina: 'quiz' });
